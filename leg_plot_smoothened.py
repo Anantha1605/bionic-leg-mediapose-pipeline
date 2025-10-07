@@ -31,10 +31,10 @@ def visualize_leg_angles(csv_file="output_angles.csv", smooth=False, method="sav
     frames = df['frame']
 
     # --- Define both smoothing options ---
-    def moving_average(series, window_size=5):
+    def moving_average(series, window_size=15):
         return np.convolve(series, np.ones(window_size)/window_size, mode='same')
 
-    def savgol_smooth(series, window_length=21, polyorder=3): # window_length = 21 if 60 fps, 11 if 30 fps
+    def savgol_smooth(series, window_length=21, polyorder=9): # window_length = 21 if 60 fps, 11 if 30 fps
         # Ensure window length is odd and smaller than data length
         if len(series) < window_length:
             window_length = len(series) - 1 if len(series) % 2 == 0 else len(series)
