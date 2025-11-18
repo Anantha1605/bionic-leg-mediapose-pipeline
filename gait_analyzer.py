@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 # ---------------- Load CSV ----------------
-csv_file = "output_angles.csv"  # Replace with your CSV path
+csv_file = "output_angles.csv"  
 df = pd.read_csv(csv_file)
 
 # ---------------- Extract & Correct Joint Angle Series ----------------
@@ -48,7 +48,6 @@ print(f"Average left knee ROM: {np.mean(left_knee_rom):.1f}°")
 print(f"Average right hip ROM: {np.mean(right_hip_rom):.1f}°")
 print(f"Average left hip ROM: {np.mean(left_hip_rom):.1f}°")
 
-# ---------------- Plot Results ----------------
 # ---------------- Plot Results ----------------
 plt.figure(figsize=(12, 8))
 
