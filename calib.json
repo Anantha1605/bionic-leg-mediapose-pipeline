@@ -1,0 +1,126 @@
+{
+  "version": "1.0",
+  "description": "Calibration configuration for bionic leg servo motors",
+  "last_updated": "2025-11-18",
+  "notes": "Update pwm_min and pwm_max values after physical calibration. Invert flag reverses servo direction.",
+  
+  "joints": {
+    "right_hip": {
+      "joint_id": 0,
+      "motor_id": "M6",
+      "pca9685_channel": 5,
+      "angle_min": 0,
+      "angle_max": 180,
+      "pwm_min": 300,
+      "pwm_max": 450,
+      "invert": false,
+      "calibrated": false,
+      "notes": "Hip joints not yet calibrated - mechanical issue with servo horn hole"
+    },
+    
+    "right_knee": {
+      "joint_id": 1,
+      "motor_id": "M4",
+      "pca9685_channel": 3,
+      "angle_min": 0,
+      "angle_max": 180,
+      "pwm_min": 280,
+      "pwm_max": 500,
+      "invert": true,
+      "calibrated": false,
+      "notes": "Assumed to behave like left_knee - needs physical calibration"
+    },
+    
+    "right_ankle": {
+      "joint_id": 2,
+      "motor_id": "M2",
+      "pca9685_channel": 1,
+      "angle_min": 0,
+      "angle_max": 180,
+      "pwm_min": 291,
+      "pwm_max": 325,
+      "invert": true,
+      "calibrated": true,
+      "notes": "Calibrated. Direction: Forward = decreasing PWM (inverted)"
+    },
+    
+    "left_hip": {
+      "joint_id": 3,
+      "motor_id": "M5",
+      "pca9685_channel": 4,
+      "angle_min": 0,
+      "angle_max": 180,
+      "pwm_min": 300,
+      "pwm_max": 450,
+      "invert": false,
+      "calibrated": false,
+      "notes": "Hip joints not yet calibrated - mechanical issue with servo horn hole"
+    },
+    
+    "left_knee": {
+      "joint_id": 4,
+      "motor_id": "M3",
+      "pca9685_channel": 2,
+      "angle_min": 0,
+      "angle_max": 180,
+      "pwm_min": 309,
+      "pwm_max": 324,
+      "invert": true,
+      "calibrated": true,
+      "notes": "Calibrated. Direction: Forward = decreasing PWM (inverted)"
+    },
+    
+    "left_ankle": {
+      "joint_id": 5,
+      "motor_id": "M1",
+      "pca9685_channel": 0,
+      "angle_min": 0,
+      "angle_max": 180,
+      "pwm_min": 292,
+      "pwm_max": 324,
+      "invert": false,
+      "calibrated": true,
+      "notes": "Calibrated. Direction: Forward = increasing PWM"
+    }
+  },
+  
+  "hardware": {
+    "pca9685_address": "0x40",
+    "pca9685_frequency": 50,
+    "oscillator_frequency": 27000000,
+    "tca9548a_channel": 0,
+    "i2c_speed": 400000
+  },
+  
+  "safety": {
+    "max_pwm_delta_per_cycle": 2,
+    "loop_delay_ms": 20,
+    "watchdog_timeout_ms": 500,
+    "safe_angle_min": 0,
+    "safe_angle_max": 180
+  },
+  
+  "calibration_procedure": [
+    "1. Fix mechanical issues (hip servo horn holes)",
+    "2. Power servos with external 5-6V supply (5-10A capable)",
+    "3. Connect Arduino to PC via USB",
+    "4. Upload ArduinoRelativeMovement.ino",
+    "5. Use calibration sweeper to find PWM limits for each joint",
+    "6. Record MIN and MAX PWM where servo reaches physical stops",
+    "7. Test direction - if reversed, set invert=true",
+    "8. Update this JSON file with measured values",
+    "9. Send CAL commands to Arduino to update runtime calibration",
+    "10. Send SAVE_CAL command to store in EEPROM"
+  ],
+  
+  "arduino_calibration_commands": [
+    "CAL,0,300,450,0   # Right Hip: joint_id, pwm_min, pwm_max, invert",
+    "CAL,1,280,500,1   # Right Knee",
+    "CAL,2,291,325,1   # Right Ankle",
+    "CAL,3,300,450,0   # Left Hip",
+    "CAL,4,309,324,1   # Left Knee",
+    "CAL,5,292,324,0   # Left Ankle",
+    "SAVE_CAL          # Save to EEPROM",
+    "PRINT_CAL         # Verify calibration"
+  ]
+}
