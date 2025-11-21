@@ -1,12 +1,19 @@
 # Requirements for Bionic Leg Simulation
 
-# Core visualization
+# ============= Pygame Version (Game-like, 60 FPS) =============
 pygame>=2.5.0
 
-# Optional: For future 3D visualization
+# ============= Matplotlib Version (Scientific, Professional) =============
+matplotlib>=3.7.0
+numpy>=1.24.0
+
+# ============= Optional: Future 3D Visualization =============
 # pyopengl>=3.1.0
 # pyopengl-accelerate>=3.1.0
 # vpython>=7.6.0
 
-# Already required for Arduino streaming
+# ============= Already Required for Arduino Streaming =============
 pyserial>=3.5
+
+# ============= Install All Simulators =============
+# pip install pygame matplotlib numpy pyserial
